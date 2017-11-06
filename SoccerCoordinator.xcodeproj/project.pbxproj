@@ -90,6 +90,9 @@
 		5D4E6A4B1CAAF5EB00EE3B88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Treehouse;
