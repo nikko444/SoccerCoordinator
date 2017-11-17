@@ -1,42 +1,42 @@
 /*       Techdegree project #1
  
-    First of all thank you so much for reviewing all that mess below,
-    and I'm sorry for my spelling in advance! Cheers =)
+ First of all thank you so much for reviewing all that mess below,
+ and I'm sorry for my spelling in advance! Cheers =)
  
  
-    The following code is assigning ANY number of players to ANY number
-    of teams while maintaining the average height of each team as close
-    to the rest of the teams as possible
+ The following code is assigning ANY number of players to ANY number
+ of teams while maintaining the average height of each team as close
+ to the rest of the teams as possible
  
- Some input on how the general logics of the assigning process works:
+ Some input on how the general logic of the assigning process works:
  
-    1. I decided to use Dictionaries of Tuples to store multiple types
-        of data all togeather in a consistent manner.
+ 1. I decided to use Dictionaries of Tuples to store multiple types
+ of data, all together in a consistent manner.
  
-    2. I gave all the players an Integer Key for easier and more
-        transparent refferencing during assigning players to teams
+ 2. I gave all the players an Integer Key for easier and more
+ transparent referencing during assigning players to teams
  
-    3. Inside the TEAMS Dictionary I decided to store all information
-        on each of the players, even though that is less effective vs.
-        storing just a reference key, in this particular case it would
-        be a better shot for a code's readability and logic transperancy
+ 3. Inside the TEAMS Dictionary, I decided to store all information
+ on each of the players, even though that is less effective vs.
+ storing just a reference key, in this particular case it would
+ be a better shot for a code's readability and logic transparency
  
-    4. First I assingn just the Experienced players to the TEAMS
-        Dictionary and only then I assign inexperienced players
-        Disregarding whether I assign an experienced or an inexperienced player
-        the logic maintains the average team height balancing
+ 4. First I assign just the Experienced players to the TEAMS
+ Dictionary and only then I assign inexperienced players
+ Disregarding whether I assign an experienced or an inexperienced player
+ the logic maintains the average team height balancing
  
-    5. To implement balanced averege height of the players in all teams
-        I'm following a very straight forward logic:
-        Find the team with a least total height (by total height I mean sum
-        of all of the team's players' height) and assign the tallest player
-        remaing in the unassigned players list to that team. This should
-        repeat unless all of the players are assigned
+ 5. To implement balanced average height of the players in all teams
+ I'm following a very straightforward logic:
+ Find the team with a least total height (by total height I mean the sum
+ of all of the team's players' height) and assign the tallest player
+ remaining in the unassigned players list to that team. This should
+ repeat unless all of the players are assigned
  
-    6. Personalized letters are stored as a Dictionary with a String type
-        key and a String type value to store the letter itself. As Date and
-        Time are yet out ofthe scope of the course at the oment I'll use
-        just a String values
+ 6. Personalized letters are stored as a Dictionary with a String type
+ key and a String type value to store the letter itself. As Date and
+ Time is yet out of the scope of the course at the moment I'll use
+ just a String values
  
 */
 
@@ -146,6 +146,23 @@ func assign(_ players: [Int: (name: String, height: Int, hasExperience: Bool, gu
     return teamsMutable
 }
 
+func printTheAverageHeight(of teams: [String: [(name: String, height: Int, hasExperience: Bool, guardianName: String)]]) {
+    var averageHeight: Double
+    var totalHeight: Double
+    var numberOfPlayersInTeam: Int
+    for team in teams {
+        averageHeight = 0
+        totalHeight = 0
+        numberOfPlayersInTeam = 0
+        for player in team.value{
+            numberOfPlayersInTeam += 1
+            totalHeight += Double(player.height)
+        }
+        averageHeight = totalHeight / Double(numberOfPlayersInTeam)
+        print("An average height of \"\(team.key)\" soccer team is \(String(format: "%.2f", averageHeight))\"")
+    }
+}
+
 /*  ---makeLetters---
  This function receives:
  1. A Dictionarry of all the players
@@ -230,10 +247,11 @@ let firstTeamsPracticeDates: [String: String] =
      "Raptors": "March 18, 1pm"]
 
 teams = assign(players, to: teams) // Assigning players to teams
+printTheAverageHeight(of: teams)
 
 //Declaring the letters Dictionary as a constant and calling the makeLetters function to fill the Dictionary
 //Here I'm using the Int type as a key which corresponds to a player's Dictionary key
-let lettersToGuardians: [Int: String] = makeLetters(for: players, asMembersOf: teams, for: firstTeamsPracticeDates)
+let letters: [Int: String] = makeLetters(for: players, asMembersOf: teams, for: firstTeamsPracticeDates)
 
-printThe(lettersToGuardians, of: players)
+printThe(letters, of: players)
 
